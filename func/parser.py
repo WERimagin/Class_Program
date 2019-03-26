@@ -6,7 +6,7 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--start_epoch", type=int, default="0", help="input model epoch")
     parser.add_argument("--cuda_number", type=int, default="0", help="specify cuda number")
-    parser.add_argument("--train_batch_size", type=int, default="4", help="input train batch size")
+    parser.add_argument("--train_batch_size", type=int, default="32", help="input train batch size")
     parser.add_argument("--test_batch_size", type=int, default="1", help="input test batch size")
 
     ##データのオプション
