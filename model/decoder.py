@@ -29,6 +29,8 @@ class Decoder(nn.Module):
         self.attention_wight=nn.Linear(self.hidden_size*3,self.hidden_size*3)
         self.out=nn.Linear(self.hidden_size*3,self.vocab_size)
         self.dropout=nn.Dropout(args.dropout)
+
+        self.activate=nn.Tanh()
         #self.out=nn.Linear(self.hidden_size*1,self.vocab_size)
 
     #decoderでのタイムステップ（単語ごと）の処理
@@ -38,11 +40,11 @@ class Decoder(nn.Module):
 
         input=torch.unsqueeze(input,1)#(batch,1)
         embed=self.word_embed(input)#(batch,1,embed_size)
-        embed=self.dropout(embed)
-        embed=F.relu(embed)
+        #embed=self.dropout(embed)
+        #embed=F.relu(embed)
 
         output,decoder_hidden=self.gru(embed,decoder_hidden.contiguous())#(batch,1,hidden_size),(2,batch,hidden_size)
-        output=self.dropout(output)
+        #output=self.dropout(output)
         output=torch.squeeze(output,1)#(batch,hidden_size)
 
         use_attention=True
@@ -54,10 +56,11 @@ class Decoder(nn.Module):
             #アテンションの重みと元々の出力の重み和を計算してrelu
             #このフェーズは無くても良い(Opennmtなど)
             output=self.attention_wight(torch.cat((output,attention_output),dim=-1))#(batch,hidden_size*3)
+            output=self.activate(output)
 
         #relu
-        output=self.dropout(output)
-        output=F.relu(output)#(barch,hidden_size*3)
+        #output=self.dropout(output)
+        #output=F.relu(output)#(barch,hidden_size*3)
 
         #単語辞書のサイズに変換する
         output=self.out(output)#(batch,vocab_size)
