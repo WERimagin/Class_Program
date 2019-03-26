@@ -30,7 +30,7 @@ def show_result(source,target,predict,attention_result):
     print(source)
     print(target)
     print(predict)
-    print(attention_result.tolist())
+    print()
     fig = plt.figure()
     ax = fig.add_subplot(111)
     cax=ax.matshow(attention_result.tolist())
@@ -53,7 +53,7 @@ def model_handler(args,data,train=True):
     batch_size=args.test_batch_size
     model.eval()
     #batchをランダムな配列で指定する
-    batchmaker=BatchMaker(data_size,batch_size,False)
+    batchmaker=BatchMaker(data_size,batch_size,True)
     batches=batchmaker()
     predict_rate=0
     loss_sum=0
@@ -79,12 +79,13 @@ test_data=test_data if args.use_train_data==False else train_data
 
 device_kind="cuda:{}".format(args.cuda_number) if torch.cuda.is_available() else "cpu"
 args.device=torch.device(device_kind)
+args.test_batch_size=1
 
 model=Seq2Seq(args)
 model.to(args.device)
 
 if args.model_name!="":
-    param = torch.load("model_data/{}".format(args.model_name))
+    param = torch.load("model_data/{}".format(args.model_name),map_location=device_kind)
     model.load_state_dict(param)
 #start_epochが0なら最初から、指定されていたら学習済みのものをロードする
 elif args.start_epoch>=1:
