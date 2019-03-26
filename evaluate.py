@@ -36,7 +36,6 @@ def show_result(source,target,predict,attention_result):
     cax=ax.matshow(attention_result.tolist())
     fig.colorbar(cax)
 
-    print(len(predict.split()),len(target.split()))
     ax.set_xticklabels(['']+source.split())
     ax.set_yticklabels(['']+predict.split())
     plt.show()

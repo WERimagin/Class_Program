@@ -50,7 +50,6 @@ class Decoder(nn.Module):
         if use_attention:
             #encoderの出力と合わせてアテンションを計算
             attention_output,attention_result=self.attention(output,encoder_output)#(batch,hidden_size*2)
-            attention_output=output
 
             #アテンションの重みと元々の出力の重み和を計算してrelu
             #このフェーズは無くても良い(Opennmtなど)
