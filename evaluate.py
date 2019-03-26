@@ -30,7 +30,7 @@ def show_result(source,target,predict,attention_result):
     print(source)
     print(target)
     print(predict)
-    print()
+    print(attention_result)
     fig = plt.figure()
     ax = fig.add_subplot(111)
     cax=ax.matshow(attention_result.tolist())
