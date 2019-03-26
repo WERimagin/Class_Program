@@ -87,6 +87,8 @@ def data_loader(args,path,first=True):
             targets_rm.append(t)
 
     logger(args,"data_size:{}".format(len(sources_rm)))
+    logger(args,sources_rm[0])
+    logger(args,targets_rm[0])
 
     sources_id=[[s_word2id[w] if w in s_word2id else s_word2id["<UNK>"] for w in sent.split()] for sent in sources_rm]
     targets_id=[[t_word2id[w] if w in t_word2id else t_word2id["<UNK>"] for w in sent.split()] for sent in targets_rm]

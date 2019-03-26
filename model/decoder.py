@@ -40,7 +40,7 @@ class Decoder(nn.Module):
 
         input=torch.unsqueeze(input,1)#(batch,1)
         embed=self.word_embed(input)#(batch,1,embed_size)
-        #embed=self.dropout(embed)
+        embed=self.dropout(embed)
         #embed=F.relu(embed)
 
         output,decoder_hidden=self.gru(embed,decoder_hidden.contiguous())#(batch,1,hidden_size),(2,batch,hidden_size)
@@ -57,6 +57,7 @@ class Decoder(nn.Module):
             #このフェーズは無くても良い(Opennmtなど)
             output=self.attention_wight(torch.cat((output,attention_output),dim=-1))#(batch,hidden_size*3)
             output=self.activate(output)
+            output=self.dropout(output)
 
         #relu
         #output=self.dropout(output)
