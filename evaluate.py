@@ -1,3 +1,10 @@
+##kftt
+##英語でコメント
+#jupyter colaboratory
+#データのサイズを小さくして、自前で動かせるように調整
+#mecab,sentence_piece
+
+
 import warnings
 warnings.filterwarnings('ignore')
 import sys

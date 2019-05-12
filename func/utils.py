@@ -95,7 +95,6 @@ def data_loader(args,path,first=True):
     targets_id=[[t_word2id["<SOS>"]] + sent + [t_word2id["<EOS>"]] for sent in targets_id]
 
     #データをシャッフルし、9割をtrain,1割をtest
-    random.seed(0)
     train_data_size=int(len(sources_id)*0.9)
     pairs=[sources_id,targets_id]
 
